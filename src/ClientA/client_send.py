@@ -32,15 +32,21 @@ def display_functions():
 1:B0000001
 2:B0000002
         """)
+    amount = input("Enter the amount in decimal:")
 
+    return choice_payer, choice_payee, amount
 
 
 def new_transaction():
     display_functions()
-    amount = input("Enter the amount in decimal:")
+
 
 def current_balance():
-    pass
+    with open('balance', 'r') as f:
+        f_contents = f.readline()
+        print("Account-1 "+f_contents[18:26])
+        f_contents = f.readline()
+        print("Account-2 "+f_contents[18:26])
 
 
 def unconfirmed_transactions():
