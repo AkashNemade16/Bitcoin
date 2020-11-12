@@ -19,34 +19,33 @@ choice = input("""
 Please enter your choice:""")
 
 
-def display_functions():
+
+
+def new_transaction():
     print("Select the payer:")
     choice_payer = input("""
 1:A0000001
 2:A0000002
-       """)
+           """)
 
-    # if choice_payer == "1" or choice_payer == "2":
     print("Select the payee:")
     choice_payee = input("""
 1:B0000001
 2:B0000002
-        """)
+            """)
     amount = input("Enter the amount in decimal:")
+    Tx_amount = hex(amount)
 
-    return choice_payer, choice_payee, amount
 
-
-def new_transaction():
-    display_functions()
+# if choice_payer == "1":
 
 
 def current_balance():
     with open('balance', 'r') as f:
-        f_contents = f.readline()
-        print("Account-1 "+f_contents[18:26])
-        f_contents = f.readline()
-        print("Account-2 "+f_contents[18:26])
+        f_content = f.readline()
+        print("Account-1 " + f_content[18:26])
+        f_content = f.readline()
+        print("Account-2 " + f_content[18:26])
 
 
 def unconfirmed_transactions():
