@@ -22,16 +22,16 @@ Please enter your choice:""")
 def display_functions():
     print("Select the payer:")
     choice_payer = input("""
-   1:A0000001
-   2:A0000002
+1:A0000001
+2:A0000002
        """)
 
-    if choice_payer == "1" or choice_payer == "2":
-        print("Select the payee:")
-        choice_payee = input("""
-    1:B0000001
-    2:B0000002
-            """)
+    # if choice_payer == "1" or choice_payer == "2":
+    print("Select the payee:")
+    choice_payee = input("""
+1:B0000001
+2:B0000002
+        """)
 
 
 
