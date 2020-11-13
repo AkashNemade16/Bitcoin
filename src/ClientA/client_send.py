@@ -1,4 +1,5 @@
 from socket import *
+import os
 
 severName = 'localhost'
 serverPort = 12000
@@ -18,7 +19,6 @@ aer1 = hex(cinitial_balance)
 with open('balance', 'w') as g:
     g.writelines("A0000001: " + aer + " : " + aer1 + "\n")
     g.writelines("A0000002: " + aer + " : " + aer1)
-
 
 choice = input("""
 1:Enter a new transaction.
@@ -48,22 +48,27 @@ def new_transaction():
     i_amount = int(amount)
     tx_amount = hex(i_amount)
 
-
     # tx-fee
-    tx_fee = hex(2)
+    tx_fee = 2
 
     if choice_payer == "1":
         with open('balance', 'r') as t:
             f_content1 = t.readline()
             f_content2 = f_content1.split(":")
-            var = f_content2[1]  # unconfirmed_balance = var
+            var = f_content2[1]  # unconfirmed_balance
+            var1 = int(var, 16)
+            tm = i_amount + tx_fee
 
-            tm = tx_amount + tx_fee
+        if tm <= var1:
+            var2 = var1 - tm
+            print(var2)
+            var3 = hex(var2)  # unconfirmed_balance - (tx_amount+tx_fee)
+    with open('Unconfirmed_T', 'a+') as w:
+        # for i in range(0, 3):
+        w.write("balance : " + tx_amount + "\n")
 
-        if tm <= var:
-            var -= tm
-            with open('Unconfirmed_T', 'w') as w:
-                w.write('h')
+    with open('E:\Bitcoin-Project\src\F1\Temp_T', 'w') as l:
+        l.write(tx_amount)  # sending tx to full node f1
 
 
 def current_balance():
