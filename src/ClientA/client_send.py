@@ -55,6 +55,7 @@ class ClientSend:
         #     l.write(tx_amount)  # sending tx to full node f1
 
         # return tx_amount
+        socket()
 
     def current_balance(self):
         with open('balance', 'r') as f:
@@ -93,22 +94,30 @@ class ClientSend:
 
 
 Object = ClientSend('')
-choice = input("""
-   1:Enter a new transaction.
-   2:The current balance for each account.
-   3:Print the unconfirmed transactions.
-   4:Print the last X number of confirmed transactions (either as a Payee or a Payer).
-   5:Print the blockchain.
 
-   Please enter your choice:""")
 
-if choice == "1":
-    Object.new_transaction()
-elif choice == "2":
-    Object.current_balance()
-elif choice == "3":
-    Object.unconfirmed_transactions()
-elif choice == "4":
-    Object.confirmed_transactions()
-elif choice == "5":
-    Object.blockchain()
+def main():
+    Object.start()
+    choice = input("""
+       1:Enter a new transaction.
+       2:The current balance for each account.
+       3:Print the unconfirmed transactions.
+       4:Print the last X number of confirmed transactions (either as a Payee or a Payer).
+       5:Print the blockchain.
+    
+       Please enter your choice:""")
+
+    if choice == "1":
+        Object.new_transaction()
+    elif choice == "2":
+        Object.current_balance()
+    elif choice == "3":
+        Object.unconfirmed_transactions()
+    elif choice == "4":
+        Object.confirmed_transactions()
+    elif choice == "5":
+        Object.blockchain()
+
+
+if __name__ == '__main__':
+    main()
