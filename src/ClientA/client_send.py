@@ -28,6 +28,7 @@ class ClientSend:
     2:B0000002
                 """)
 
+
         # converting the tx_amount into hex#
         amount = input("Enter the amount of payment in decimal:")
         i_amount = int(amount)
@@ -35,7 +36,7 @@ class ClientSend:
 
         # tx-fee
         tx_fee = 2
-
+        # for account 1
         if choice_payer == "1":
             with open('balance', 'r') as t:
                 f_content1 = t.readline()
@@ -47,14 +48,34 @@ class ClientSend:
             if tm <= var1:
                 var2 = var1 - tm
                 var3 = hex(var2)  # unconfirmed_balance - (tx_amount+tx_fee)
-            self.socket()
-        with open('Unconfirmed_T', 'a+') as w:
-            # for i in range(0, 3):
-            w.write("balance : " + self.tx_amount + "\n")
 
+            with open('Unconfirmed_T', 'a+') as w:
+                # for i in range(0, 3):
+                w.write("balance : " + self.tx_amount + "\n")
+            self.socket()
         # with open('E:\Bitcoin-Project\src\F1\Temp_T', 'w') as l:
         #     l.write(tx_amount)  # sending tx to full node f1
-        return self.tx_amount
+        # return self.tx_amount
+
+        # for account 2
+        if choice_payer == "2":
+            with open('balance', 'r') as t:
+                f_content1 = t.readline()
+                f_content1 = t.readline()
+                f_content2 = f_content1.split(":")
+                var = f_content2[1]  # unconfirmed_balance
+                var1 = int(var, 16)
+                tm = i_amount + tx_fee
+
+            if tm <= var1:
+                var2 = var1 - tm
+                var3 = hex(var2)  # unconfirmed_balance - (tx_amount+tx_fee)
+
+            with open('Unconfirmed_T', 'a+') as w:
+                # for i in range(0, 3):
+                w.write("balance : " + self.tx_amount + "\n")
+            self.socket()
+
     def current_balance(self):
         with open('balance', 'r') as f:
             f_content = f.readline()
@@ -95,24 +116,27 @@ class ClientSend:
 
 
 
-Object = ClientSend('')
 
-choice = input("""
-   1:Enter a new transaction.
-   2:The current balance for each account.
-   3:Print the unconfirmed transactions.
-   4:Print the last X number of confirmed transactions (either as a Payee or a Payer).
-   5:Print the blockchain.
+while 1:
 
-   Please enter your choice:""")
+    choice = input("""
+       1:Enter a new transaction.
+       2:The current balance for each account.
+       3:Print the unconfirmed transactions.
+       4:Print the last X number of confirmed transactions (either as a Payee or a Payer).
+       5:Print the blockchain.
+    
+       Please enter your choice:""")
+    Object = ClientSend('')
+    if choice == "1":
+        Object.new_transaction()
+    elif choice == "2":
+        Object.current_balance()
+    elif choice == "3":
+        Object.unconfirmed_transactions()
+    elif choice == "4":
+        Object.confirmed_transactions()
+    elif choice == "5":
+        Object.blockchain()
 
-if choice == "1":
-    Object.new_transaction()
-elif choice == "2":
-    Object.current_balance()
-elif choice == "3":
-    Object.unconfirmed_transactions()
-elif choice == "4":
-    Object.confirmed_transactions()
-elif choice == "5":
-    Object.blockchain()
+    break

@@ -9,3 +9,5 @@ while 1:
     modifiedMessage = message.decode()
     print(modifiedMessage)
     # serverSocket.sendto(modifiedMessage.encode(), clientAddress)
+    data = modifiedMessage
+
