@@ -18,19 +18,19 @@ class ClientSend:
 
         print("Select the payer:")
         choice_payer = input("""
-    1:A0000001
-    2:A0000002
-               """)
+        1:A0000001
+        2:A0000002
+           """)
 
         print("Select the payee:")
         choice_payee = input("""
-    1:B0000001
-    2:B0000002
-                """)
-
+        1:B0000001
+        2:B0000002
+            """)
 
         # converting the tx_amount into hex#
-        amount = input("Enter the amount of payment in decimal:")
+        amount = input("Enter the amount of payment in decimal:\n")
+        print("Tx: " + choice_payer + " pays " + choice_payee + " the amount of " + amount+ " BC")
         i_amount = int(amount)
         self.tx_amount = hex(i_amount)
 
@@ -38,6 +38,7 @@ class ClientSend:
         tx_fee = 2
         # for account 1
         if choice_payer == "1":
+
             with open('balance', 'r') as t:
                 f_content1 = t.readline()
                 f_content2 = f_content1.split(":")
@@ -110,11 +111,7 @@ class ClientSend:
         clientSocket = socket(AF_INET, SOCK_DGRAM)
         message = self.tx_amount
         clientSocket.sendto(message.encode(), (severName, serverPort))
-        modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
-        print(modifiedMessage)
         clientSocket.close()
-
-
 
 
 while 1:
@@ -138,5 +135,5 @@ while 1:
         Object.confirmed_transactions()
     elif choice == "5":
         Object.blockchain()
-
-    break
+    else:
+        break
