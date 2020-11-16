@@ -8,8 +8,8 @@ class ClientSend:
 
     uinitial_balance = int(1000)
     cinitial_balance = int(1000)
-    aer = hex(uinitial_balance)
-    aer1 = hex(cinitial_balance)
+    aer = '{:08x}'.format(uinitial_balance)
+    aer1 = '{:08x}'.format(cinitial_balance)
     with open('balance', 'w') as g:
         g.writelines("A0000001: " + aer + " : " + aer1 + "\n")
         g.writelines("A0000002: " + aer + " : " + aer1)
@@ -32,7 +32,7 @@ class ClientSend:
         amount = input("Enter the amount of payment in decimal:\n")
         print("Tx: " + choice_payer + " pays " + choice_payee + " the amount of " + amount+ " BC")
         i_amount = int(amount)
-        self.tx_amount = hex(i_amount)
+        self.tx_amount = '{:08x}'.format(i_amount)
 
         # tx-fee
         tx_fee = 2
@@ -52,7 +52,7 @@ class ClientSend:
 
             with open('Unconfirmed_T', 'a+') as w:
                 # for i in range(0, 3):
-                w.write("balance : " + self.tx_amount + "\n")
+                w.write("A1-balance : " + self.tx_amount + "\n")
             self.socket()
         # with open('E:\Bitcoin-Project\src\F1\Temp_T', 'w') as l:
         #     l.write(tx_amount)  # sending tx to full node f1
@@ -74,7 +74,7 @@ class ClientSend:
 
             with open('Unconfirmed_T', 'a+') as w:
                 # for i in range(0, 3):
-                w.write("balance : " + self.tx_amount + "\n")
+                w.write("A2-balance : " + self.tx_amount + "\n")
             self.socket()
 
     def current_balance(self):
@@ -117,13 +117,13 @@ class ClientSend:
 while 1:
 
     choice = input("""
-       1:Enter a new transaction.
-       2:The current balance for each account.
-       3:Print the unconfirmed transactions.
-       4:Print the last X number of confirmed transactions (either as a Payee or a Payer).
-       5:Print the blockchain.
-    
-       Please enter your choice:""")
+1:Enter a new transaction.
+2:The current balance for each account.
+3:Print the unconfirmed transactions.
+4:Print the last X number of confirmed transactions (either as a Payee or a Payer).
+5:Print the blockchain.
+
+Please enter your choice:""")
     Object = ClientSend('')
     if choice == "1":
         Object.new_transaction()
