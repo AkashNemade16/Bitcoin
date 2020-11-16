@@ -44,7 +44,7 @@ while 1:
             if (turn % 2) == 1:
                 serverSocketF1.close()
             else:
-                lastblockhash = '{:32x}'.format(0)
+                lastblockhash = str().zfill(32)
                 with open('Temp_T', 'r') as r:
                     f_content1 = r.readline()
                     print(f_content1)
@@ -59,25 +59,42 @@ while 1:
                         return m
 
                     a = hash(mes=f_content1)
-                    print(a)
+                    # print(a)
                     b = hash(mes=f_content2)
-                    print(b)
+                    # print(b)
                     c = hash(mes=f_content3)
-                    print(c)
+                    # print(c)
                     d = hash(mes=f_content4)
-                    print(d)
+                    # print(d)
 
                     ab = str(a) + str(b)
                     ab1 = hash(ab)
-                    print(ab1)
+                    # print(ab1)
 
                     cd = str(c) + str(d)
                     cd1 = hash(cd)
-                    print(cd1)
+                    # print(cd1)
 
                     abcd = str(ab1) + str(cd1)
-                    abcd1 = hash(abcd)
-                    print(abcd1)
+                    abcd1 = hash(abcd) #merkle root
+                    # print(abcd1)
 
 
-    # if f1 == clientAddress1:
+                    hashHandler = hashlib.sha256()
+                    nonce = 0
+
+                    while True:
+                        block_header = str(nonce) + lastblockhash + abcd1.__str__()
+                        hashHandler.update(block_header.encode("utf-8"))
+                        hashValue = hashHandler.hexdigest()
+
+                        nounceFound = True
+                        for i in range(4):
+                            if hashValue[i] != '0':
+                                nounceFound = False
+                        if nounceFound:
+                            print('nonce:{0}, hash:{1}'.format(nonce, hashValue))
+                            break
+                        else:
+                            nonce = nonce + 1
+        # if f1 == clientAddress1:
