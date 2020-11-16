@@ -28,3 +28,14 @@ print(c)
 d = hash(mes=f_content4)
 print(d)
 
+ab = str(a) + str(b)
+ab1 = hash(ab)
+print(ab1)
+
+cd = str(c) + str(d)
+cd1 = hash(cd)
+print(cd1)
+
+abcd = str(ab1) + str(cd1)
+abcd1 = hash(abcd)
+print(abcd1)
