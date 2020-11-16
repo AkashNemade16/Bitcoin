@@ -52,7 +52,7 @@ class ClientSend:
 
             with open('Unconfirmed_T', 'a+') as w:
                 # for i in range(0, 3):
-                w.write("A1-balance : " + self.tx_amount + "\n")
+                w.write(self.tx_amount.lstrip() + "\n")
             self.socket()
         # with open('E:\Bitcoin-Project\src\F1\Temp_T', 'w') as l:
         #     l.write(tx_amount)  # sending tx to full node f1
@@ -74,7 +74,7 @@ class ClientSend:
 
             with open('Unconfirmed_T', 'a+') as w:
                 # for i in range(0, 3):
-                w.write("A2-balance : " + self.tx_amount + "\n")
+                w.write(self.tx_amount.lstrip() + "\n")
             self.socket()
 
     def current_balance(self):
