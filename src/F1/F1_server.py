@@ -106,4 +106,12 @@ while 1:
                 file.truncate(0)
                 file.close()
 
+                #mining fee
+                mining_fee = 30
+                total_tx_fee = 8
+                node1_balance = mining_fee + total_tx_fee
+                with open('Blockchain', 'a+') as g:
+                    blo = g.write(block)
+
+
         # if f1 == clientAddress1:

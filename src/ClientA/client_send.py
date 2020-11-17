@@ -3,8 +3,8 @@ from socket import *
 
 class ClientSend:
 
-    def __init__(self, tx_amount):
-        self.tx_amount = tx_amount
+    def __init__(self, trans):
+        self.trans = trans
 
     uinitial_balance = int(1000)
     cinitial_balance = int(1000)
@@ -30,15 +30,21 @@ class ClientSend:
 
         # converting the tx_amount into hex#
         amount = input("Enter the amount of payment in decimal:\n")
-        print("Tx: " + choice_payer + " pays " + choice_payee + " the amount of " + amount+ " BC")
+        print("Tx: " + choice_payer + " pays " + choice_payee + " the amount of " + amount + " BC")
         i_amount = int(amount)
-        self.tx_amount = '{:08x}'.format(i_amount)
+        tx_amount = '{:08x}'.format(i_amount)
 
         # tx-fee
         tx_fee = 2
         # for account 1
         if choice_payer == "1":
+            acc = 'A0000001'
+            if choice_payee == "1":
+                acc1 = 'B0000001'
+            else:
+                acc1 = 'B0000002'
 
+            self.trans = acc + tx_amount + acc1
             with open('balance', 'r') as t:
                 f_content1 = t.readline()
                 f_content2 = f_content1.split(":")
@@ -51,15 +57,16 @@ class ClientSend:
                 var3 = hex(var2)  # unconfirmed_balance - (tx_amount+tx_fee)
 
             with open('Unconfirmed_T', 'a+') as w:
-                # for i in range(0, 3):
-                w.write(self.tx_amount.lstrip() + "\n")
+                w.write(self.trans.lstrip() + "\n")
             self.socket()
-        # with open('E:\Bitcoin-Project\src\F1\Temp_T', 'w') as l:
-        #     l.write(tx_amount)  # sending tx to full node f1
-        # return self.tx_amount
 
         # for account 2
         if choice_payer == "2":
+            acc = 'A0000002'
+            if choice_payee == "1":
+                acc1 = 'B0000001'
+            else:
+                acc1 = 'B0000002'
             with open('balance', 'r') as t:
                 f_content1 = t.readline()
                 f_content1 = t.readline()
@@ -73,8 +80,7 @@ class ClientSend:
                 var3 = hex(var2)  # unconfirmed_balance - (tx_amount+tx_fee)
 
             with open('Unconfirmed_T', 'a+') as w:
-                # for i in range(0, 3):
-                w.write(self.tx_amount.lstrip() + "\n")
+                w.write(self.trans.lstrip() + "\n")
             self.socket()
 
     def current_balance(self):
@@ -109,7 +115,7 @@ class ClientSend:
         severName = 'localhost'
         serverPort = 10000
         clientSocket = socket(AF_INET, SOCK_DGRAM)
-        message = self.tx_amount
+        message = self.trans
         clientSocket.sendto(message.encode(), (severName, serverPort))
         clientSocket.close()
 
