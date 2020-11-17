@@ -27,6 +27,10 @@ while 1:
     msg = message1.decode()
     print(msg)
 
+    # message2, clientAddress2 = serverSocketF1.recvfrom(2048)
+    # msg1 = message2.decode()
+    # print(msg1)
+
     if client_send == clientAddress:  # receive tx and appending to temp_t.txt
         with open('Temp_T', '+a') as w:
             w.write(clientA.lstrip() + "\n")
@@ -111,7 +115,8 @@ while 1:
                 total_tx_fee = 8
                 node1_balance = mining_fee + total_tx_fee
                 with open('Blockchain', 'a+') as g:
-                    blo = g.write(block)
+                    blo = g.writelines(block+"\n")
+
 
 
         # if f1 == clientAddress1:
