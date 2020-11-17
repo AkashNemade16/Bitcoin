@@ -65,3 +65,11 @@
 #         break
 #     else:
 #         nonce = nonce + 1
+# with open('E:\Bitcoin-Project\src\F1\Temp_T', 'r+') as k:
+#     toremove = k.readlines()
+# # with open('Temp_T', 'a+') as l:
+# #     for lines in toremove:
+# #         l.write(lines.strip())
+file = open("Temp_T", "r+")
+file.truncate(0)
+file.close()
