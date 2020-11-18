@@ -6,6 +6,7 @@ class ClientSend:
     def __init__(self, trans):
         self.trans = trans
 
+
     uinitial_balance = int(1000)
     cinitial_balance = int(1000)
     aer = '{:08x}'.format(uinitial_balance)
@@ -105,18 +106,40 @@ class ClientSend:
             print(f)
 
     def confirmed_transactions(self):
-        pass
+        with open('Confirmed_T', 'r') as f:
+            lines = f.read().splitlines()
+
 
     def blockchain(self):
-        pass
+        serverName = 'localhost'
+        F1port = 10000
+        clientSendAport = 15000
+        clientSocket = socket(AF_INET, SOCK_DGRAM)
+        clientSocket.bind(('', clientSendAport))
+        clientSocket.sendto("blockchain request".encode(), (serverName, F1port))
+        reply, serverAddress = clientSocket.recvfrom(2048)
+        while reply.decode() != "blockchain transmitted":
+            block = reply.decode()
+            print("Nonce = " + block[:8])
+            print("Last Block Hash = " + block[8:72])
+            print("Merkle Root = " + block[72:136])
+            print("Transaction #1 = " + block[136:160])
+            print("Transaction #2 = " + block[160:184])
+            print("Transaction #3 = " + block[184:208])
+            print("Transaction #4 = " + block[208:232])
+
+            reply, serverAddress = clientSocket.recvfrom(2048)
+        clientSocket.close()
 
     def socket(self):
 
         severName = 'localhost'
-        serverPort = 10000
+        serverPort = 10001
+        serverPort1 = 10000
         clientSocket = socket(AF_INET, SOCK_DGRAM)
+        clientSocket.bind(('', serverPort))
         message = self.trans
-        clientSocket.sendto(message.encode(), (severName, serverPort))
+        clientSocket.sendto(message.encode(), (severName, serverPort1))
         clientSocket.close()
 
 

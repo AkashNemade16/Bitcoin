@@ -105,18 +105,39 @@ class ClientSend:
             print(f)
 
     def confirmed_transactions(self):
-        pass
+        with open('Confirmed_T.txt', 'r') as f:
+            lines = f.read().splitlines()
 
     def blockchain(self):
-        pass
+        serverName = 'localhost'
+        F1port = 11000
+        clientSendAport = 16000
+        clientSocket = socket(AF_INET, SOCK_DGRAM)
+        clientSocket.bind(('', clientSendAport))
+        clientSocket.sendto("blockchain request".encode(), (serverName, F1port))
+        reply, serverAddress = clientSocket.recvfrom(2048)
+        while reply.decode() != "blockchain transmitted":
+            block = reply.decode()
+            print("Nonce = " + block[:8])
+            print("Last Block Hash = " + block[8:72])
+            print("Merkle Root = " + block[72:136])
+            print("Transaction #1 = " + block[136:160])
+            print("Transaction #2 = " + block[160:184])
+            print("Transaction #3 = " + block[184:208])
+            print("Transaction #4 = " + block[208:232])
+
+            reply, serverAddress = clientSocket.recvfrom(2048)
+        clientSocket.close()
 
     def socket(self):
 
         severName = 'localhost'
-        serverPort = 11000
+        serverPort = 11001
+        serverPortF2 = 11000
         clientSocket = socket(AF_INET, SOCK_DGRAM)
+        clientSocket.bind(('', serverPort))
         message = self.trans
-        clientSocket.sendto(message.encode(), (severName, serverPort))
+        clientSocket.sendto(message.encode(), (severName, serverPortF2))
         clientSocket.close()
 
 
